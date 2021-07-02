@@ -10,7 +10,13 @@ module.exports = {
         nunito: ['Nunito', 'sans-serif'],
       },
       spacing: {
-        1024: '64rem'
+        1024: '59rem'
+      },
+      colors: {
+        brand: '#ff6947'
+      },
+      dropShadow: {
+        'custom': '0 5px 5px rgba(0, 0, 0, 0.04)',
       }
     },
   },
