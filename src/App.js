@@ -88,7 +88,7 @@ const Main = ({ prompt, handlePromptChange, activeTopic, activeArticle, handleAr
 const Title = ({ activeTopic, activeArticle }) => {
     if (activeTopic === '' && activeArticle === '' ) {
         return (
-            <div className="text-3xl text-white mt-6 pr-3">Answers to your questions from the earnr team</div>
+            <div className="text-3xl text-white mt-6 pr-3">Answers to your questions from the team at earnr</div>
         )
     }
     return (
