@@ -12,6 +12,10 @@ const App = () => {
         setSearchPrompt(event.target.value)
     }
 
+    const handlePromptChangeAlt = (value) => {
+        setSearchPrompt(value)
+    }
+
     const handleTopicChange = (id) => {
         setActiveTopic(id)
     }
@@ -22,20 +26,20 @@ const App = () => {
 
     return (
         <div className="bg-gray-100">
-            <Main prompt={searchPrompt} handlePromptChange={handlePromptChange} />
+            <Main prompt={searchPrompt} handlePromptChange={handlePromptChange} activeTopic={activeTopic} activeArticle={activeArticle} handleTopicChange={handleTopicChange} handleArticleChange={handleArticleChange} />
             <div className="h-auto w-full p-5 sm:p-9 py-7 flex justify-center">
                 <div className="w-full lg:w-1024 h-auto">
-                    <Collection activeTopic={activeTopic} handleTopicChange={handleTopicChange} activeArticle={activeArticle} handleArticleChange={handleArticleChange} />
-                    <Topic activeTopic={activeTopic} handleTopicChange={handleTopicChange} activeArticle={activeArticle} handleArticleChange={handleArticleChange} />
-                    <Article activeTopic={activeTopic} handleTopicChange={handleTopicChange} activeArticle={activeArticle} handleArticleChange={handleArticleChange} />
-                    <Search searchPrompt={searchPrompt} activeTopic={activeTopic} handleTopicChange={handleTopicChange} activeArticle={activeArticle} handleArticleChange={handleArticleChange} />
+                    <Collection activeTopic={activeTopic} handleTopicChange={handleTopicChange} activeArticle={activeArticle} handleArticleChange={handleArticleChange} searchPrompt={searchPrompt} />
+                    <Topic activeTopic={activeTopic} handleTopicChange={handleTopicChange} activeArticle={activeArticle} handleArticleChange={handleArticleChange} searchPrompt={searchPrompt} />
+                    <Article activeTopic={activeTopic} handleTopicChange={handleTopicChange} activeArticle={activeArticle} handleArticleChange={handleArticleChange} searchPrompt={searchPrompt} />
+                    <Search searchPrompt={searchPrompt} handleTopicChange={handleTopicChange} handleArticleChange={handleArticleChange} handlePromptChangeAlt={handlePromptChangeAlt} />
                 </div>
             </div>
         </div>
     );
 }
 
-const Main = ({ prompt, handlePromptChange }) => {
+const Main = ({ prompt, handlePromptChange, activeTopic, activeArticle, handleArticleChange, handleTopicChange }) => {
     return (
         <div className="bg-gray-700 w-full h-auto p-5 pb-2 sm:p-9 sm:pb-2 pt-2 justify-center flex">
             <div className="w-full lg:w-1024">
@@ -44,10 +48,10 @@ const Main = ({ prompt, handlePromptChange }) => {
                         <img src="./icons/back.png" className="h-3 inline" alt="Go back"/>
                         <div className=" text-white text-xs font-semibold mb-3 inline">Go back to earnr</div>
                     </a>                        
-                </div>                
-                <img src="./logo.png" className="h-6 inline" alt="earnr"/>
+                </div>
+                <img src="./logo.png" className="h-6 inline cursor-pointer" alt="earnr" onClick={() => (handleArticleChange(''), handleTopicChange(''))}/>                
                 <span className="inline text-white text-xs"> | Support Centre </span>
-                <div className="text-3xl text-white mt-6 pr-3">Answers to your questions from the earnr team</div>
+                <Title activeTopic={activeTopic} activeArticle={activeArticle} />
                 <input
                     type="text"
                     className="
@@ -73,8 +77,20 @@ const Main = ({ prompt, handlePromptChange }) => {
     )
 }
 
-const Collection = ({ handleTopicChange, activeTopic, activeArticle, handleArticleChange }) => {
+const Title = ({ activeTopic, activeArticle }) => {
     if (activeTopic === '' && activeArticle === '' ) {
+        return (
+            <div className="text-3xl text-white mt-6 pr-3">Answers to your questions from the earnr team</div>
+        )
+    }
+    return (
+        <div></div>
+    )
+        
+}
+
+const Collection = ({ handleTopicChange, activeTopic, activeArticle, searchPrompt }) => {
+    if (activeTopic === '' && activeArticle === '' && searchPrompt==='' ) {
         return (
             <div>
                 {topics.map(topic => (
@@ -103,16 +119,13 @@ const Collection = ({ handleTopicChange, activeTopic, activeArticle, handleArtic
             </div>
         )
     }
-    else {
-        return (
-            <div></div>
-        )
-    }
-    
+    return (
+        <div></div>
+    ) 
 }
 
-const Topic = ({ activeTopic, handleTopicChange, activeArticle, handleArticleChange }) => {
-    if (activeTopic !== '' && activeArticle === '') {
+const Topic = ({ activeTopic, handleTopicChange, activeArticle, handleArticleChange, searchPrompt }) => {
+    if (activeTopic !== '' && activeArticle === '' && searchPrompt === '') {
         const selectedTopic = topics.filter(topic => topic.id === Number(activeTopic))[0]
         
         return (
@@ -160,15 +173,13 @@ const Topic = ({ activeTopic, handleTopicChange, activeArticle, handleArticleCha
             </div>
         )
     }
-    else {
-        return (
-            <div></div>
-        )
-    }
+    return (
+        <div></div>
+    )
 }
 
-const Article = ({ activeTopic, handleTopicChange, activeArticle, handleArticleChange }) => {
-    if (activeTopic !== '' && activeArticle !== '') {
+const Article = ({ activeTopic, handleTopicChange, activeArticle, handleArticleChange, searchPrompt }) => {
+    if (activeTopic !== '' && activeArticle !== '' && searchPrompt === '') {
         const selectedTopic = topics.filter(topic => topic.id === Number(activeTopic))[0]
         const selectedArticle = selectedTopic.articles.filter(article => article.id === Number(activeArticle))[0]
 
@@ -198,16 +209,50 @@ const Article = ({ activeTopic, handleTopicChange, activeArticle, handleArticleC
             </div>
         )
     }
-    else {
-        return (
-            <div></div>
-        )
-    }
-}
-
-const Search = ({ searchPrompt, handleTopicChange, activeTopic, activeArticle, handleArticleChange }) => {
     return (
         <div></div>
     )
 }
+
+const Search = ({ searchPrompt, handleTopicChange, handleArticleChange, handlePromptChangeAlt }) => {
+      
+    const articlesList = topics.map(topic => (
+        topic.articles.map(article => ({
+            "topicId": topic.id,
+            "articleId": article.id,
+            "topic": topic.title,
+            "title": article.title,
+            "contents": article.contents,
+            "authorImage": article.authorImage,
+            "author": article.author,
+            "lastUpdated": article.lastUpdated
+        }))
+    )).flat().filter(article => article.contents.toLowerCase().search(searchPrompt.toLowerCase()) !== -1 || article.title.toLowerCase().search(searchPrompt.toLowerCase()) !== -1)
+
+    if (searchPrompt !== '') {
+        return (
+            <div>
+                {articlesList.map(article => (
+                    <div className="bg-white rounded w-full h-auto p-6 drop-shadow-custom filter cursor-pointer hover:bg-gray-50 mb-5" onClick={() => (handleArticleChange(Number(article.articleId)), handleTopicChange(article.topicId), handlePromptChangeAlt(''))} >
+                        <div className="text-lg text-brand font-semibold  mb-2">{article.title}</div>
+                        <div className="flex"> 
+                            <img src={article.authorImage} className="h-8 rounded-full" alt="team"/>
+                            <div className="ml-3 text-gray-500 text-xs grid-rows-2">
+                                <div className="row-span-1">Written by {article.author}</div>
+                                <div className="row-span-1">Updated on {moment(article.lastUpdated).format('D MMMM YYYY')}</div>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        )
+    }
+    return (
+        <div></div>
+    )
+    
+}
+
+
+
 export default App

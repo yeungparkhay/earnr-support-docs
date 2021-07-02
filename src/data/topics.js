@@ -71,20 +71,26 @@ const topics = [
             {
                 "id": 1,
                 "title": "How do I create an account?",
+                "author": "Park",
                 "authorImage": "./team/park.jpg",
-                "lastUpdated": "2021-07-02"
+                "lastUpdated": "2021-07-02",
+                "contents": "xxx"
             },
             {
                 "id": 2,
                 "title": "How can I download the earnr app?",
+                "author": "Park",
                 "authorImage": "./team/park.jpg",
-                "lastUpdated": "2021-07-02"
+                "lastUpdated": "2021-07-02",
+                "contents": "xxx"
             },
             {
                 "id": 3,
                 "title": "Is earnr a regulated company?",
+                "author": "Park",
                 "authorImage": "./team/park.jpg",
-                "lastUpdated": "2021-07-02"
+                "lastUpdated": "2021-07-02",
+                "contents": "xxx"
             },
         ]  
     },
@@ -107,6 +113,7 @@ const topics = [
             {
                 "id": 1,
                 "title": "Why do I need to link my bank account?",
+                "author": "Park",
                 "authorImage": "./team/park.jpg",
                 "lastUpdated": "2021-07-02",
                 "contents": "Your tax return is related to your business, which is based on how you earn and spend your money. Connecting your bank or credit card gives us access to your transactions, which we use to calculate your tax obligation. <br><br> \
@@ -120,6 +127,7 @@ const topics = [
             {
                 "id": 2,
                 "title": "What is Plaid?",
+                "author": "Park",
                 "authorImage": "./team/park.jpg",
                 "lastUpdated": "2021-07-02",
                 "contents": "<b>earnr</b> uses <a href='https://plaid.com/uk'><u>Plaid</u></a> Account Information Services to link your bank account. Plaid is a renowned FCA approved open banking provider. We’ve chosen to work with them because we believe they are the safest and have the best infrastructure. <br><br> \
@@ -129,6 +137,7 @@ const topics = [
             {
                 "id": 3,
                 "title": "What do I do if my bank account is not supported?",
+                "author": "Park",
                 "authorImage": "./team/park.jpg",
                 "lastUpdated": "2021-07-02",
                 "contents": "In order to use <b>earnr</b>, you will need to connect a current account, savings account or credit card account. Most bank accounts and credit cards are supported, but unfortunately, if your bank account is not supported you will not be able to use the app. If your bank account is not supported send us an email and we’ll look into integrate it as soon as possible."
@@ -136,6 +145,7 @@ const topics = [
             {
                 "id": 4,
                 "title": "Can I connect multiple accounts?",
+                "author": "Park",
                 "authorImage": "./team/park.jpg",
                 "lastUpdated": "2021-07-02",
                 "contents": "Yes! Just follow the below steps: <br><br> \
@@ -147,6 +157,7 @@ const topics = [
             {
                 "id": 5,
                 "title": "How do I unlink my bank account?",
+                "author": "Park",
                 "authorImage": "./team/park.jpg",
                 "lastUpdated": "2021-07-02",
                 "contents": "xxx"
