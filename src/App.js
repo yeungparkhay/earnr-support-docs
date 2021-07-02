@@ -37,7 +37,7 @@ const App = () => {
                 <div className="w-full lg:w-1024 h-auto">
                     <Collection activeTopic={activeTopic} handleTopicChange={handleTopicChange} activeArticle={activeArticle} handleArticleChange={handleArticleChange} searchPrompt={searchPrompt} />
                     <Topic activeTopic={activeTopic} handleTopicChange={handleTopicChange} activeArticle={activeArticle} handleArticleChange={handleArticleChange} searchPrompt={searchPrompt} />
-                    <Article activeTopic={activeTopic} handleTopicChange={handleTopicChange} activeArticle={activeArticle} handleArticleChange={handleArticleChange} searchPrompt={searchPrompt} />
+                    <Article activeTopic={activeTopic} handleTopicChange={handleTopicChange} activeArticle={activeArticle} handleArticleChange={handleArticleChange} searchPrompt={searchPrompt} handleRecentChange={handleRecentChange}  />
                     <Search searchPrompt={searchPrompt} handleTopicChange={handleTopicChange} handleArticleChange={handleArticleChange} handlePromptChangeAlt={handlePromptChangeAlt} setRecentSearch={setRecentSearch} />
                 </div>
             </div>
@@ -199,7 +199,7 @@ const Topic = ({ activeTopic, handleTopicChange, activeArticle, handleArticleCha
     )
 }
 
-const Article = ({ activeTopic, handleTopicChange, activeArticle, handleArticleChange, searchPrompt }) => {
+const Article = ({ activeTopic, handleTopicChange, activeArticle, handleArticleChange, searchPrompt, handleRecentChange }) => {
     if (activeTopic !== '' && activeArticle !== '' && searchPrompt === '') {
         const selectedTopic = topics.filter(topic => topic.id === Number(activeTopic))[0]
         const selectedArticle = selectedTopic.articles.filter(article => article.id === Number(activeArticle))[0]
@@ -207,9 +207,9 @@ const Article = ({ activeTopic, handleTopicChange, activeArticle, handleArticleC
         return (
             <div>
                 <div className="text-gray-500 text-sm mb-4">
-                    <span className="cursor-pointer font-semibold " onClick={() => (handleTopicChange(''), handleArticleChange(''))}>All Collections </span>
+                    <span className="cursor-pointer font-semibold " onClick={() => (handleTopicChange(''), handleArticleChange(''), handleRecentChange(''))}>All Collections </span>
                     <span>  &gt;  </span>
-                    <span className="cursor-pointer font-semibold " onClick={() => handleArticleChange('')}>{selectedTopic.title}</span>
+                    <span className="cursor-pointer font-semibold " onClick={() => (handleArticleChange(''), handleRecentChange(''))}>{selectedTopic.title}</span>
                     <span>  &gt;  {selectedArticle.title}</span>
                 </div>
                 <div className="bg-white p-6 py-10 rounded justify-center flex">
@@ -236,7 +236,9 @@ const Article = ({ activeTopic, handleTopicChange, activeArticle, handleArticleC
 }
 
 const Search = ({ searchPrompt, handleTopicChange, handleArticleChange, handlePromptChangeAlt, setRecentSearch }) => {
-      
+    
+    const processedSearchPrompt = searchPrompt.replace('[^a-zA-Z\d\s]', '').toLowerCase()
+    
     const articlesList = topics.map(topic => (
         topic.articles.map(article => ({
             "topicId": topic.id,
@@ -248,13 +250,13 @@ const Search = ({ searchPrompt, handleTopicChange, handleArticleChange, handlePr
             "author": article.author,
             "lastUpdated": article.lastUpdated
         }))
-    )).flat().filter(article => article.contents.toLowerCase().search(searchPrompt.toLowerCase()) !== -1 || article.title.toLowerCase().search(searchPrompt.toLowerCase()) !== -1)
+    )).flat().filter(article => article.contents.toLowerCase().search(processedSearchPrompt) !== -1 || article.title.toLowerCase().search(processedSearchPrompt) !== -1 || article.topic.toLowerCase().search(processedSearchPrompt) !== -1)
 
     if (searchPrompt !== '') {
         return (
             <div>
                 {articlesList.map(article => (
-                    <div className="bg-white rounded w-full h-auto p-6 drop-shadow-custom filter cursor-pointer hover:bg-gray-50 mb-5" onClick={() => (handleArticleChange(Number(article.articleId)), handleTopicChange(article.topicId), handlePromptChangeAlt(''), setRecentSearch(searchPrompt))} >
+                    <div className="bg-white rounded w-full h-auto p-6 drop-shadow-custom filter cursor-pointer hover:bg-gray-50 mb-5" onClick={() => (handleArticleChange(Number(article.articleId)), handleTopicChange(article.topicId), handlePromptChangeAlt(''), setRecentSearch(searchPrompt.replace(/\W/g, '')))} >
                         <div className="text-lg text-brand font-semibold  mb-2">{article.title}</div>
                         <div className="flex"> 
                             <img src={article.authorImage} className="h-8 rounded-full" alt="team"/>
