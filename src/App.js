@@ -7,9 +7,11 @@ const App = () => {
     const [searchPrompt, setSearchPrompt] = useState('')
     const [activeTopic, setActiveTopic] = useState('')
     const [activeArticle, setActiveArticle] = useState('')
+    const [recentSearch, setRecentSearch] = useState('earnr')
     
     const handlePromptChange = (event) => {
         setSearchPrompt(event.target.value)
+        setRecentSearch('')
     }
 
     const handlePromptChangeAlt = (value) => {
@@ -24,22 +26,26 @@ const App = () => {
         setActiveArticle(id)
     }
 
+    const handleRecentChange = (value) => {
+        setRecentSearch(value)
+    }
+
     return (
         <div className="bg-gray-100">
-            <Main prompt={searchPrompt} handlePromptChange={handlePromptChange} activeTopic={activeTopic} activeArticle={activeArticle} handleTopicChange={handleTopicChange} handleArticleChange={handleArticleChange} />
+            <Main prompt={searchPrompt} handlePromptChange={handlePromptChange} activeTopic={activeTopic} activeArticle={activeArticle} handleTopicChange={handleTopicChange} handleArticleChange={handleArticleChange} recentSearch={recentSearch} handleRecentChange={handleRecentChange} handlePromptChangeAlt={handlePromptChangeAlt} />
             <div className="h-auto w-full p-5 sm:p-9 py-7 flex justify-center">
                 <div className="w-full lg:w-1024 h-auto">
                     <Collection activeTopic={activeTopic} handleTopicChange={handleTopicChange} activeArticle={activeArticle} handleArticleChange={handleArticleChange} searchPrompt={searchPrompt} />
                     <Topic activeTopic={activeTopic} handleTopicChange={handleTopicChange} activeArticle={activeArticle} handleArticleChange={handleArticleChange} searchPrompt={searchPrompt} />
                     <Article activeTopic={activeTopic} handleTopicChange={handleTopicChange} activeArticle={activeArticle} handleArticleChange={handleArticleChange} searchPrompt={searchPrompt} />
-                    <Search searchPrompt={searchPrompt} handleTopicChange={handleTopicChange} handleArticleChange={handleArticleChange} handlePromptChangeAlt={handlePromptChangeAlt} />
+                    <Search searchPrompt={searchPrompt} handleTopicChange={handleTopicChange} handleArticleChange={handleArticleChange} handlePromptChangeAlt={handlePromptChangeAlt} setRecentSearch={setRecentSearch} />
                 </div>
             </div>
         </div>
     );
 }
 
-const Main = ({ prompt, handlePromptChange, activeTopic, activeArticle, handleArticleChange, handleTopicChange }) => {
+const Main = ({ prompt, handlePromptChange, activeTopic, activeArticle, handleArticleChange, handleTopicChange, recentSearch, handleRecentChange, handlePromptChangeAlt }) => {
     return (
         <div className="bg-gray-700 w-full h-auto p-5 pb-2 sm:p-9 sm:pb-2 pt-2 justify-center flex">
             <div className="w-full lg:w-1024">
@@ -72,6 +78,7 @@ const Main = ({ prompt, handlePromptChange, activeTopic, activeArticle, handleAr
                     onChange={handlePromptChange}
                     placeholder="Search for articles..."
                 />
+                <Recent recentSearch={recentSearch} handlePromptChangeAlt={handlePromptChangeAlt} handleRecentChange={handleRecentChange}/>
             </div>
         </div>
     )
@@ -86,7 +93,20 @@ const Title = ({ activeTopic, activeArticle }) => {
     return (
         <div></div>
     )
-        
+}
+
+const Recent = ({ recentSearch, handleRecentChange, handlePromptChangeAlt }) => {
+    if (recentSearch !== '') {
+        return (
+            <div className="text-gray-50 text-sm mb-4 hover:text-gray-300 cursor-pointer" onClick={() => (handlePromptChangeAlt(recentSearch), handleRecentChange(''))}>
+                <span>Return to search results for: </span>
+                <span className="font-semibold">{recentSearch}</span>
+            </div>
+        )
+    }
+    return (
+        <div></div>
+    )
 }
 
 const Collection = ({ handleTopicChange, activeTopic, activeArticle, searchPrompt }) => {
@@ -214,7 +234,7 @@ const Article = ({ activeTopic, handleTopicChange, activeArticle, handleArticleC
     )
 }
 
-const Search = ({ searchPrompt, handleTopicChange, handleArticleChange, handlePromptChangeAlt }) => {
+const Search = ({ searchPrompt, handleTopicChange, handleArticleChange, handlePromptChangeAlt, setRecentSearch }) => {
       
     const articlesList = topics.map(topic => (
         topic.articles.map(article => ({
@@ -233,7 +253,7 @@ const Search = ({ searchPrompt, handleTopicChange, handleArticleChange, handlePr
         return (
             <div>
                 {articlesList.map(article => (
-                    <div className="bg-white rounded w-full h-auto p-6 drop-shadow-custom filter cursor-pointer hover:bg-gray-50 mb-5" onClick={() => (handleArticleChange(Number(article.articleId)), handleTopicChange(article.topicId), handlePromptChangeAlt(''))} >
+                    <div className="bg-white rounded w-full h-auto p-6 drop-shadow-custom filter cursor-pointer hover:bg-gray-50 mb-5" onClick={() => (handleArticleChange(Number(article.articleId)), handleTopicChange(article.topicId), handlePromptChangeAlt(''), setRecentSearch(searchPrompt))} >
                         <div className="text-lg text-brand font-semibold  mb-2">{article.title}</div>
                         <div className="flex"> 
                             <img src={article.authorImage} className="h-8 rounded-full" alt="team"/>
