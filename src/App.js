@@ -7,7 +7,7 @@ const App = () => {
     const [searchPrompt, setSearchPrompt] = useState('')
     const [activeTopic, setActiveTopic] = useState('')
     const [activeArticle, setActiveArticle] = useState('')
-    const [recentSearch, setRecentSearch] = useState('earnr')
+    const [recentSearch, setRecentSearch] = useState('')
     
     const handlePromptChange = (event) => {
         setSearchPrompt(event.target.value)
@@ -41,6 +41,7 @@ const App = () => {
                     <Search searchPrompt={searchPrompt} handleTopicChange={handleTopicChange} handleArticleChange={handleArticleChange} handlePromptChangeAlt={handlePromptChangeAlt} setRecentSearch={setRecentSearch} />
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }
@@ -52,10 +53,10 @@ const Main = ({ prompt, handlePromptChange, activeTopic, activeArticle, handleAr
                 <div className="text-right">
                     <a href="https://www.earnr.co.uk/" className="space-x-1 hover:opacity-80">
                         <img src="./icons/back.png" className="h-3 inline" alt="Go back"/>
-                        <div className=" text-white text-xs font-semibold mb-3 inline">Go back to earnr</div>
+                        <div className=" text-white text-xs font-semibold mb-3 inline">Visit earnr main site</div>
                     </a>                        
                 </div>
-                <img src="./logo.png" className="h-6 inline cursor-pointer" alt="earnr" onClick={() => (handleArticleChange(''), handleTopicChange(''))}/>                
+                <img src="./logo.png" className="h-6 inline cursor-pointer" alt="earnr" onClick={() => (handleArticleChange(''), handleTopicChange(''), handleRecentChange(''), handlePromptChangeAlt(''))}/>                
                 <span className="inline text-white text-xs"> | Support Centre </span>
                 <Title activeTopic={activeTopic} activeArticle={activeArticle} />
                 <input
@@ -273,6 +274,19 @@ const Search = ({ searchPrompt, handleTopicChange, handleArticleChange, handlePr
     
 }
 
+const Footer = () => {
+    return (
+        <div className="w-full h-60 bg-white p-10">
+            <div className="w-full h-full text-center space-y-8">
+                <img src="./logo_light.png" className="h-6 inline cursor-pointer" alt="earnr" />                
+                <span className="inline text-gray-400 text-xs font-semibold"> | Support Centre </span>
+                <div className="w-full text-gray-500 text-sm mb-3 font-semibold text-center">
+                    <a href="http://earnr.co.uk">Visit earnr main site</a>
+                </div>
+            </div>      
+        </div>
+    )
+}
 
 
 export default App
