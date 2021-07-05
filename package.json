@@ -1,7 +1,6 @@
 {
   "name": "earnr-support-docs",
   "version": "0.1.0",
-  "main": "server.js",
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.1.2",
@@ -21,7 +20,7 @@
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.4"
   },
   "scripts": {
-    "start": "craco start",
+    "start": "node server.js",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
