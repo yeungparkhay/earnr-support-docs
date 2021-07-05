@@ -3,10 +3,7 @@ const morgan = require('morgan')
 const app = express()
 
 app.use(morgan('tiny'))
-
-app.get('/', (request, response) => {
-  response.sendFile('index.html')
-})
+app.use(express.static('build'))
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
