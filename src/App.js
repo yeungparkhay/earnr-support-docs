@@ -31,7 +31,7 @@ const App = () => {
     }
 
     return (
-        <div className="bg-gray-100">
+        <div className="bg-floralWhite">
             <Main prompt={searchPrompt} handlePromptChange={handlePromptChange} activeTopic={activeTopic} activeArticle={activeArticle} handleTopicChange={handleTopicChange} handleArticleChange={handleArticleChange} recentSearch={recentSearch} handleRecentChange={handleRecentChange} handlePromptChangeAlt={handlePromptChangeAlt} />
             <div className="h-auto w-full p-5 sm:p-9 py-7 flex justify-center">
                 <div className="w-full lg:w-1024 h-auto">
@@ -53,12 +53,11 @@ const Main = ({ prompt, handlePromptChange, activeTopic, activeArticle, handleAr
                 <div className="text-right">
                     <a href="https://www.earnr.co.uk/" className="space-x-1 hover:opacity-80">
                         <img src="./icons/back.png" className="h-3 inline" alt="Go back"/>
-                        <div className=" text-white text-xs font-semibold mb-3 inline">Visit earnr main site</div>
+                        <div className=" text-white text-xs font-semibold mb-3 inline">Go to earnr.co.uk</div>
                     </a>                        
                 </div>
-                <img src="./logo.png" className="h-6 inline cursor-pointer" alt="earnr" onClick={() => (handleArticleChange(''), handleTopicChange(''), handleRecentChange(''), handlePromptChangeAlt(''))}/>                
-                <span className="inline text-white text-xs"> | Support Centre </span>
-                <Title activeTopic={activeTopic} activeArticle={activeArticle} />
+                <img src="./logo.png" className="h-14 cursor-pointer pb-2" alt="earnr" onClick={() => (handleArticleChange(''), handleTopicChange(''), handleRecentChange(''), handlePromptChangeAlt(''))}/>
+                <div className="text-xl text-white mt-2 pt-3 pr-3 border-t">Support guides and articles</div>
                 <input
                     type="text"
                     className="
@@ -72,27 +71,17 @@ const Main = ({ prompt, handlePromptChange, activeTopic, activeArticle, handleAr
                         bg-opacity-25
                         hover:bg-opacity-30
                         text-lg
+                        font-bold
                         focus:bg-opacity-100 focus:text-gray-700
                         my-6
                     "
                     value={prompt}
                     onChange={handlePromptChange}
-                    placeholder="Search for articles..."
+                    placeholder="How can we help?"
                 />
                 <Recent recentSearch={recentSearch} handlePromptChangeAlt={handlePromptChangeAlt} handleRecentChange={handleRecentChange}/>
             </div>
         </div>
-    )
-}
-
-const Title = ({ activeTopic, activeArticle }) => {
-    if (activeTopic === '' && activeArticle === '' ) {
-        return (
-            <div className="text-3xl text-white mt-6 pr-3">Answers to your questions from the team at earnr</div>
-        )
-    }
-    return (
-        <div></div>
     )
 }
 
@@ -117,9 +106,7 @@ const Collection = ({ handleTopicChange, activeTopic, activeArticle, searchPromp
                 {topics.map(topic => (
                     <div className="bg-white rounded w-full h-auto p-6 drop-shadow-custom filter cursor-pointer hover:bg-gray-50 mb-5" onClick={() => handleTopicChange(topic.id)}>
                         <div className="flex">
-                            <div className="flex justify-center pr-6 pt-3">
-                                <img src={topic.logo.url} className="h-8 inline col-span-1 mx-2" alt={topic.logo.alt}/>
-                            </div>
+                            <div className="flex justify-center pr-6 pt-3 w-20 text-xl">{topic.logo}</div>
                             <div>
                                 <div className="text-lg text-brand font-semibold">{topic.title}</div>
                                 <div className="text-gray-500 mb-2">{topic.subtitle}</div>
@@ -152,20 +139,18 @@ const Topic = ({ activeTopic, handleTopicChange, activeArticle, handleArticleCha
         return (
             <div>
                 <div className="text-gray-500 text-sm mb-4">
-                    <span className="cursor-pointer font-semibold " onClick={() => handleTopicChange('')}>All Collections </span>
+                    <span className="cursor-pointer font-semibold " onClick={() => handleTopicChange('')}>earnr Support </span>
                     <span>  &gt;  {selectedTopic.title}</span>
                 </div>
-                <div className="bg-gray-200 p-6">
+                <div className="bg-brand-light p-6 rounded">
                     <div className="flex">
-                        <div className="flex justify-center pr-6 pt-3">
-                            <img src={selectedTopic.logo.url} className="h-8 inline col-span-1 mx-2" alt={selectedTopic.logo.alt}/>
-                        </div>
+                        <div className="flex justify-center pr-6 pt-3 w-20 text-xl">{selectedTopic.logo}</div>
                         <div>
                             <div className="text-3xl text-gray-800 mb-3">{selectedTopic.title}</div>
-                            <div className="text-gray-500 mb-2">{selectedTopic.subtitle}</div>
+                            <div className="text-gray-700 mb-2">{selectedTopic.subtitle}</div>
                             <div className="flex mb-8"> 
                                 <img src={selectedTopic.authorImage} className="h-8 rounded-full" alt="team"/>
-                                <div className="ml-3 text-gray-500 text-xs grid-rows-2">
+                                <div className="ml-3 text-gray-700 text-xs grid-rows-2">
                                     <div className="row-span-1">{selectedTopic.articles.length} articles in this topic</div>
                                     <div className="row-span-1">
                                         <span>Written by </span>
@@ -207,7 +192,7 @@ const Article = ({ activeTopic, handleTopicChange, activeArticle, handleArticleC
         return (
             <div>
                 <div className="text-gray-500 text-sm mb-4">
-                    <span className="cursor-pointer font-semibold " onClick={() => (handleTopicChange(''), handleArticleChange(''), handleRecentChange(''))}>All Collections </span>
+                    <span className="cursor-pointer font-semibold " onClick={() => (handleTopicChange(''), handleArticleChange(''), handleRecentChange(''))}>earnr Support </span>
                     <span>  &gt;  </span>
                     <span className="cursor-pointer font-semibold " onClick={() => (handleArticleChange(''), handleRecentChange(''))}>{selectedTopic.title}</span>
                     <span>  &gt;  {selectedArticle.title}</span>
@@ -257,7 +242,7 @@ const Search = ({ searchPrompt, handleTopicChange, handleArticleChange, handlePr
             <div>
                 {articlesList.map(article => (
                     <div className="bg-white rounded w-full h-auto p-6 drop-shadow-custom filter cursor-pointer hover:bg-gray-50 mb-5" onClick={() => (handleArticleChange(Number(article.articleId)), handleTopicChange(article.topicId), handlePromptChangeAlt(''), setRecentSearch(searchPrompt.replace(/\W/g, '')))} >
-                        <div className="text-lg text-brand font-semibold  mb-2">{article.title}</div>
+                        <div className="text-lg text-brand mb-2">{parse(article.title.replace(searchPrompt, '<b>' + searchPrompt + '</b>'))}</div>
                         <div className="flex"> 
                             <img src={article.authorImage} className="h-8 rounded-full" alt="team"/>
                             <div className="ml-3 text-gray-500 text-xs grid-rows-2">
@@ -265,6 +250,7 @@ const Search = ({ searchPrompt, handleTopicChange, handleArticleChange, handlePr
                                 <div className="row-span-1">Updated on {moment(article.lastUpdated).format('D MMMM YYYY')}</div>
                             </div>
                         </div>
+                        <div className="mt-4 text-sm text-gray-600">{parse(article.contents.substring(0,200).replace(/<[^>]*>?/gm, '').replace(searchPrompt, '<b>' + searchPrompt + '</b>'))}</div>
                     </div>
                 ))}
             </div>
@@ -283,7 +269,7 @@ const Footer = () => {
                 <img src="./logo_light.png" className="h-6 inline cursor-pointer" alt="earnr" />                
                 <span className="inline text-gray-400 text-xs font-semibold"> | Support Centre </span>
                 <div className="w-full text-gray-500 text-sm mb-3 font-semibold text-center">
-                    <a href="http://earnr.co.uk">Visit earnr main site</a>
+                    <a href="http://earnr.co.uk">Go to earnr.co.uk</a>
                 </div>
             </div>      
         </div>

@@ -1,6 +1,6 @@
 module.exports = {
   purge: {
-    enabled: true,
+    enabled: false,
     content: ["./src/**/*.js", "./src/*.js", "./public/index.html"],
   },
   darkMode: false, // or 'media' or 'class'
@@ -17,7 +17,11 @@ module.exports = {
         768: '42rem'
       },
       colors: {
-        brand: '#ff6947'
+        brand: {
+          DEFAULT: '#ff6947',
+          light: '#ffe6e0'
+        },
+        floralWhite: '#f6f3ec'
       },
       dropShadow: {
         'custom': '0 5px 5px rgba(0, 0, 0, 0.04)',

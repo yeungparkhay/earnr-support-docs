@@ -3,10 +3,7 @@ const topics = [
         "id": 1,
         "title": "About earnr",
         "subtitle": "Learn more about earnr",
-        "logo": {
-            "url": "./icons/info.png",
-            "alt": "Information"
-        },
+        "logo": "ℹ️",
         "authors": [
             {
                 "id": 1,
@@ -56,10 +53,7 @@ const topics = [
         "id": 2,
         "title": "Getting started with earnr",
         "subtitle": "Setup your account and get started",
-        "logo": {
-            "url": "./icons/info.png",
-            "alt": "Information"
-        },
+        "logo": "💡",
         "authors": [
             {
                 "id": 1,
@@ -98,10 +92,7 @@ const topics = [
         "id": 3,
         "title": "Connecting your bank account",
         "subtitle": "Securely link your account to earnr",
-        "logo": {
-            "url": "./icons/info.png",
-            "alt": "Information"
-        },
+        "logo": "💳",
         "authors": [
             {
                 "id": 1,
@@ -168,10 +159,7 @@ const topics = [
         "id": 4,
         "title": "Organising your transactions",
         "subtitle": "Categorise your side business income and expenses",
-        "logo": {
-            "url": "./icons/info.png",
-            "alt": "Information"
-        },
+        "logo": "📊",
         "authors": [
             {
                 "id": 1,
@@ -226,10 +214,7 @@ const topics = [
         "id": 5,
         "title": "Security and data privacy",
         "subtitle": "Learn more about how we keep your data secure",
-        "logo": {
-            "url": "./icons/info.png",
-            "alt": "Information"
-        },
+        "logo": "🔒",
         "authors": [
             {
                 "id": 1,
@@ -291,10 +276,7 @@ const topics = [
         "id": 6,
         "title": "Managing your earnr account",
         "subtitle": "Manage your subscription and account",
-        "logo": {
-            "url": "./icons/info.png",
-            "alt": "Information"
-        },
+        "logo": "🧾",
         "authors": [
             {
                 "id": 1,
@@ -325,10 +307,7 @@ const topics = [
         "id": 7,
         "title": "Getting more help",
         "subtitle": "Contact our customer service team",
-        "logo": {
-            "url": "./icons/info.png",
-            "alt": "Information"
-        },
+        "logo": "👋",
         "authors": [
             {
                 "id": 1,
