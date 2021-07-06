@@ -21,7 +21,11 @@ module.exports = {
           DEFAULT: '#ff6947',
           light: '#ffe6e0'
         },
-        floralWhite: '#f6f3ec'
+        floralWhite: '#f6f3ec',
+        crayola: {
+          DEFAULT: '#f7c84f',
+          light: '#ffeec2'
+        }
       },
       dropShadow: {
         'custom': '0 5px 5px rgba(0, 0, 0, 0.04)',

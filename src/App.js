@@ -1,9 +1,54 @@
 import React, { useState } from 'react'
-import topics from './data/topics'
+import { BrowserRouter as Router, Route, useParams } from 'react-router-dom'
 import parse from 'html-react-parser';
 import moment from 'moment'
 
+import topics from './data/topics'
+
+// const App = () => {
+//     return (
+//         <Router>
+//             <Route path='/articles/:topicId/:articleId' children={<ArticleChild />} />
+//             <Route path='/articles/:topicId' children={<ArticleChild />} />
+//             <Route path='/' children={<HomeChild />} />
+//         </Router>
+//     )
+// }
+
+// function HomeChild() {
+//     return (
+//         <Page topicId="" articleId="" />
+//     )
+// }
+
+// function ArticleChild() {
+//     let {topicId, articleId} = useParams()
+//     topicId = Number(topicId)
+//     articleId = Number(articleId)
+//     if (topicId) {
+//         const filteredTopic = topics.filter(topic => topic.id === topicId)
+//         if (filteredTopic.length === 1) {
+//             if (articleId) {
+//                 if (filteredTopic[0].articles.filter(article => article.id === articleId).length === 1) {
+//                     return (
+//                         <Page topicId={topicId} articleId={articleId} />
+//                     )
+//                 }
+//             }
+//             return (
+//                 <Page topicId={topicId} articleId="" />
+//             )
+//         }
+//     }
+//     return (
+//         <div>
+//             <Page topicId="" articleId="" />
+//         </div>
+//     )
+// }
+
 const App = () => {
+    
     const [searchPrompt, setSearchPrompt] = useState('')
     const [activeTopic, setActiveTopic] = useState('')
     const [activeArticle, setActiveArticle] = useState('')
@@ -46,7 +91,7 @@ const App = () => {
     );
 }
 
-const Main = ({ prompt, handlePromptChange, activeTopic, activeArticle, handleArticleChange, handleTopicChange, recentSearch, handleRecentChange, handlePromptChangeAlt }) => {
+const Main = ({ prompt, handlePromptChange, handleArticleChange, handleTopicChange, recentSearch, handleRecentChange, handlePromptChangeAlt }) => {
     return (
         <div className="bg-gray-700 w-full h-auto p-5 pb-2 sm:p-9 sm:pb-2 pt-2 justify-center flex">
             <div className="w-full lg:w-1024">
@@ -102,9 +147,9 @@ const Recent = ({ recentSearch, handleRecentChange, handlePromptChangeAlt }) => 
 const Collection = ({ handleTopicChange, activeTopic, activeArticle, searchPrompt }) => {
     if (activeTopic === '' && activeArticle === '' && searchPrompt==='' ) {
         return (
-            <div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {topics.map(topic => (
-                    <div className="bg-white rounded w-full h-auto p-6 drop-shadow-custom filter cursor-pointer hover:bg-gray-50 mb-5" onClick={() => handleTopicChange(topic.id)}>
+                    <div className="bg-white rounded h-auto p-6 drop-shadow-custom filter cursor-pointer hover:bg-gray-50 inline-block" onClick={() => handleTopicChange(topic.id)}>
                         <div className="flex">
                             <div className="flex justify-center pr-6 pt-3 w-20 text-xl">{topic.logo}</div>
                             <div>
@@ -146,7 +191,7 @@ const Topic = ({ activeTopic, handleTopicChange, activeArticle, handleArticleCha
                     <div className="flex">
                         <div className="flex justify-center pr-6 pt-3 w-20 text-xl">{selectedTopic.logo}</div>
                         <div>
-                            <div className="text-3xl text-gray-800 mb-3">{selectedTopic.title}</div>
+                            <div className="text-3xl text-gray-800 font-semibold mb-3">{selectedTopic.title}</div>
                             <div className="text-gray-700 mb-2">{selectedTopic.subtitle}</div>
                             <div className="flex mb-8"> 
                                 <img src={selectedTopic.authorImage} className="h-8 rounded-full" alt="team"/>
@@ -199,7 +244,7 @@ const Article = ({ activeTopic, handleTopicChange, activeArticle, handleArticleC
                 </div>
                 <div className="bg-white p-6 py-10 rounded justify-center flex">
                     <div className="w-full md:w-768 space-y-6">
-                        <div className="text-3xl text-gray-700">{selectedArticle.title}</div>
+                        <div className="text-3xl text-gray-700 font-semibold">{selectedArticle.title}</div>
                         <div className="flex"> 
                             <img src={selectedArticle.authorImage} className="h-8 rounded-full" alt="team"/>
                             <div className="ml-3 text-gray-500 text-xs grid-rows-2">
@@ -250,7 +295,7 @@ const Search = ({ searchPrompt, handleTopicChange, handleArticleChange, handlePr
                                 <div className="row-span-1">Updated on {moment(article.lastUpdated).format('D MMMM YYYY')}</div>
                             </div>
                         </div>
-                        <div className="mt-4 text-sm text-gray-600">{parse(article.contents.substring(0,200).replace(/<[^>]*>?/gm, '').replace(searchPrompt, '<b>' + searchPrompt + '</b>'))}</div>
+                        <div className="mt-4 text-sm text-gray-600">{parse(article.contents.substring(0,300).replace(/<[^>]*>?/gm, '').replace(searchPrompt, '<b>' + searchPrompt + '</b>'))}</div>
                     </div>
                 ))}
             </div>
@@ -266,7 +311,7 @@ const Footer = () => {
     return (
         <div className="w-full h-60 bg-white p-10">
             <div className="w-full h-full text-center space-y-8">
-                <img src="./logo_light.png" className="h-6 inline cursor-pointer" alt="earnr" />                
+                <img src="./logo_light.png" className="h-6 inline" alt="earnr" />                
                 <span className="inline text-gray-400 text-xs font-semibold"> | Support Centre </span>
                 <div className="w-full text-gray-500 text-sm mb-3 font-semibold text-center">
                     <a href="http://earnr.co.uk">Go to earnr.co.uk</a>
