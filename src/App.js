@@ -5,48 +5,6 @@ import moment from 'moment'
 
 import topics from './data/topics'
 
-// const App = () => {
-//     return (
-//         <Router>
-//             <Route path='/articles/:topicId/:articleId' children={<ArticleChild />} />
-//             <Route path='/articles/:topicId' children={<ArticleChild />} />
-//             <Route path='/' children={<HomeChild />} />
-//         </Router>
-//     )
-// }
-
-// function HomeChild() {
-//     return (
-//         <Page topicId="" articleId="" />
-//     )
-// }
-
-// function ArticleChild() {
-//     let {topicId, articleId} = useParams()
-//     topicId = Number(topicId)
-//     articleId = Number(articleId)
-//     if (topicId) {
-//         const filteredTopic = topics.filter(topic => topic.id === topicId)
-//         if (filteredTopic.length === 1) {
-//             if (articleId) {
-//                 if (filteredTopic[0].articles.filter(article => article.id === articleId).length === 1) {
-//                     return (
-//                         <Page topicId={topicId} articleId={articleId} />
-//                     )
-//                 }
-//             }
-//             return (
-//                 <Page topicId={topicId} articleId="" />
-//             )
-//         }
-//     }
-//     return (
-//         <div>
-//             <Page topicId="" articleId="" />
-//         </div>
-//     )
-// }
-
 const App = () => {
     
     const [searchPrompt, setSearchPrompt] = useState('')
@@ -116,7 +74,7 @@ const Main = ({ prompt, handlePromptChange, handleArticleChange, handleTopicChan
                         bg-opacity-25
                         hover:bg-opacity-30
                         text-lg
-                        font-bold
+                        font-semibold
                         focus:bg-opacity-100 focus:text-gray-700
                         my-6
                     "
@@ -147,7 +105,7 @@ const Recent = ({ recentSearch, handleRecentChange, handlePromptChangeAlt }) => 
 const Collection = ({ handleTopicChange, activeTopic, activeArticle, searchPrompt }) => {
     if (activeTopic === '' && activeArticle === '' && searchPrompt==='' ) {
         return (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {topics.map(topic => (
                     <div className="bg-white rounded h-auto p-6 drop-shadow-custom filter cursor-pointer hover:bg-gray-50 inline-block" onClick={() => handleTopicChange(topic.id)}>
                         <div className="flex">
